@@ -56,7 +56,7 @@ public class LoginChecker {
 	}
 	
 	
-	public static String readingInfo(ArrayList<String> UserNames,
+	public static String readPasswordandUsernameFromFile(ArrayList<String> UserNames,
 			 ArrayList<String> Passwords)
 			 throws IOException{
 		
@@ -151,7 +151,7 @@ public class LoginChecker {
 	String comboList;
 	
 	
-	comboList = readingInfo(userNames,passwords);
+	comboList = readPasswordandUsernameFromFile(userNames,passwords);
 	fileStream.close();
 
 	fileByteStream = new FileInputStream("confidentialInfo.txt");	//a 'FileInputStream' object used to read data from the "confidentialInfo.txt" file
