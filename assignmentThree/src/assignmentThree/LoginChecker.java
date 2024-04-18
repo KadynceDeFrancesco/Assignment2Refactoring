@@ -28,6 +28,30 @@ public class LoginChecker {
  * @return  a string representing the last username read from the file
  * @throws IOException  if there is an error reading from the file
  */
+	//Extraction method to validate the username
+	public static boolean validateUsername(String userName) {
+		return userName.length() >= 6 && userName.length() <= 8;
+	}
+	
+	//Extraction method to validate the password
+	public static boolean validatePassword(String password) {
+		boolean containsSpecialChar = password.contains("*") || 
+					password.contains("_") || password.contains("$");
+		boolean hasUpperCase = false;
+		boolean hasLowerCase = false;
+		
+		for(int i =0; i < password.length(); i++) {
+			if(Character.isUpperCase(password.charAt(i))) {
+				hasUpperCase = true;
+			}
+			if(Character.isLowerCase(password.charAt(i))) {
+				hasLowerCase = true;
+			}
+		}
+		return password.length() >= 8 && containsSpecialChar && hasUpperCase && hasLowerCase;
+	}
+	
+	
 	public static String readingInfo(ArrayList<String> UserNames,
 			 ArrayList<String> Passwords)
 			 throws IOException{
@@ -88,94 +112,15 @@ public class LoginChecker {
 		int i = 0;	// an integer used as a loop counter
 		
 		
+		do {
+			System.out.print("Enter your username: ");
+			userName = s.nextLine();
+		}while (!validateUsername(userName));
 		
-		// Prompt the user to enter a username, check if the entered username meets the requirements
-		do	{
-			boolean usernamemaxLength = true;
-			boolean usernameminLength = true;
-		
-		System.out.print("Enter your username: ");
-		userName = s.nextLine();
-		
-		
-	// Checks if the length of the inputed user name is less than 6
-	if (userName.length() < 6) {
-		usernameminLength = false;	
-		System.out.println("Sorry, your inputed username does not contain enough characters.");
-		System.out.println("This username is not valid.");
-		System.out.println("Please try again.");
-		usernamevalid = false;
-		System.out.println(" ");
-	}
-	// Checks if the length of the inputed user name is greater than 8
-	if (userName.length() > 8) {
-		usernameminLength = false;	
-		System.out.println("Sorry, your inputed password contains too many characters.");
-		System.out.println("This username is not valid.");
-		System.out.println("Please try again.");
-		usernamevalid = false;
-		System.out.println(" ");
-	}
-		// Prints a statement if both lengths return as true
-		valid = usernameminLength && usernamemaxLength;
-		} while (!valid);
-		System.out.println("This username passes the needed requirements.");
-		System.out.println(" ");
-	
-		do	{
-			boolean passwordLength = true;
-			boolean passwordUppercase = false;
-			boolean passwordLowercase = false;
-			boolean passwordSpecialone = false;	
-		System.out.print("Enter your password: ");
-		password = s.nextLine();
-	
-	// Reads password to confirm it has a special character	
-	if (password.contains("*") || password.contains("_") || password.contains("$") ) {
-		passwordSpecialone = true;
-	}
-	else {
-		System.out.println("Sorry, your password does not include a special character.");
-		System.out.println("This password is not valid.");
-		System.out.println("Please try again.");
-		System.out.println(" ");
-	}
-	// Reads password to confirm its length is less than 8
-	if (password.length() < 8) {
-		passwordLength = false;	
-		System.out.println("Sorry, your inputed password does not contain enough characters.");
-		System.out.println("This password is not valid.");
-		System.out.println("Please try again.");
-		valid = false;
-		System.out.println(" ");
-	}
-	// Reads password to confirm that it contains an upper case letter
-	for (i =0;i< password.length();i++)
-		if(Character.isUpperCase(password.charAt(i))){
-		passwordUppercase = true;
-	}
-	
-	if (passwordUppercase == false) {
-		System.out.println("Sorry, your inputed password does not contain any uppercase letters.");
-		System.out.println("This password is not valid.");
-		System.out.println("Please try again.");
-		System.out.println(" ");
-}
-	// Reads password to confirm that it contains a lower case letter
-	for (i =0;i< password.length();i++)
-		if(Character.isLowerCase(password.charAt(i))){
-		passwordLowercase = true;
-	}
-	if (passwordLowercase == false) {
-		System.out.println("Sorry, your inputed password does not contain any lowercase letters.");
-		System.out.println("This password is not valid.");
-		System.out.println("Please try again.");
-		System.out.println(" ");
-}
-		valid = passwordLowercase && passwordUppercase && passwordLength && passwordSpecialone;
-		} while (!valid && !usernamevalid);
-		System.out.println("This password passes the needed requirements.");
-		System.out.println(" ");
+		do {
+			System.out.print("Enter your password: ");
+			password = s.nextLine();
+		}while (!validatePassword(password));
 		
 		
 		FileOutputStream fileStream = null;
