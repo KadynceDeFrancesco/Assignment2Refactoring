@@ -28,6 +28,11 @@ public class LoginChecker {
  * @return  a string representing the last username read from the file
  * @throws IOException  if there is an error reading from the file
  */
+	//Replace Temp with Query
+	private static boolean containsSpecialCharacter(String password) {
+	    return password.contains("*") || password.contains("_") || password.contains("$");
+	}
+
 	//Extraction method to validate the username
 	public static boolean validateUsername(String userName) {
 		return userName.length() >= 6 && userName.length() <= 8;
@@ -35,8 +40,7 @@ public class LoginChecker {
 	
 	//Extraction method to validate the password
 	public static boolean validatePassword(String password) {
-		boolean containsSpecialChar = password.contains("*") || 
-					password.contains("_") || password.contains("$");
+		boolean containsSpecialChar = containsSpecialCharacter(password);
 		boolean hasUpperCase = false;
 		boolean hasLowerCase = false;
 		
