@@ -40,28 +40,30 @@ public class LoginChecker {
         }
     }
 
-    private static boolean containsSpecialCharacter(String password) {
-        return password.contains("*") || password.contains("_") || password.contains("$");
+    private static class PasswordValidator {
+        public static boolean isValid(String password) {
+            boolean containsSpecialChar = containsSpecialCharacter(password);
+            boolean hasUpperCase = false;
+            boolean hasLowerCase = false;
+
+            for (int i = 0; i < password.length(); i++) {
+                if (Character.isUpperCase(password.charAt(i))) {
+                    hasUpperCase = true;
+                }
+                if (Character.isLowerCase(password.charAt(i))) {
+                    hasLowerCase = true;
+                }
+            }
+            return password.length() >= 8 && containsSpecialChar && hasUpperCase && hasLowerCase;
+        }
+
+        private static boolean containsSpecialCharacter(String password) {
+            return password.contains("*") || password.contains("_") || password.contains("$");
+        }
     }
 
     public static boolean validateUsername(String userName) {
         return userName.length() >= 6 && userName.length() <= 8;
-    }
-
-    public static boolean validatePassword(String password) {
-        boolean containsSpecialChar = containsSpecialCharacter(password);
-        boolean hasUpperCase = false;
-        boolean hasLowerCase = false;
-
-        for (int i = 0; i < password.length(); i++) {
-            if (Character.isUpperCase(password.charAt(i))) {
-                hasUpperCase = true;
-            }
-            if (Character.isLowerCase(password.charAt(i))) {
-                hasLowerCase = true;
-            }
-        }
-        return password.length() >= 8 && containsSpecialChar && hasUpperCase && hasLowerCase;
     }
 
     public static void main(String[] args) throws IOException {
@@ -80,7 +82,7 @@ public class LoginChecker {
         do {
             System.out.print("Enter your password: ");
             password = s.nextLine();
-        } while (!validatePassword(password));
+        } while (!PasswordValidator.isValid(password));
 
         FileOutputStream fileStream = null;
         PrintWriter outFS = null;
