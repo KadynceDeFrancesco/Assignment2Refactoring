@@ -11,6 +11,8 @@ import java.util.Scanner;
 
 public class LoginChecker {
 	
+	private static final int NUMBER_OF_COMBOS = 3;
+	
 	public static void readPasswordandUsernameFromFile(ArrayList<String> UserNames,
 			 ArrayList<String> Passwords)
 			 throws IOException{
@@ -96,6 +98,7 @@ public class LoginChecker {
 	fileStream = new FileOutputStream("confidentialInfo.txt");
 	outFS = new PrintWriter(fileStream);
 	
+	outFS.println(NUMBER_OF_COMBOS);
 	outFS.println("3");
 	outFS.println("Unicorns");
 	outFS.println("Unicorns****");
